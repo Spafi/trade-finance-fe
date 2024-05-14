@@ -1,0 +1,6 @@
+<div class="error-list mt-1 h-1rem">
+    <ng-container *ngIf="displayErrors">
+        <small *ngFor="let error of errorsToDisplay"
+               class="p-error">{{ error | translateValue: "FORM_INPUT_ERRORS" | async }}</small>
+    </ng-container>
+</div>

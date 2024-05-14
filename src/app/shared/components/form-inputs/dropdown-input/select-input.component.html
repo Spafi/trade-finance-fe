@@ -1,0 +1,25 @@
+<div [disabled]="controlDir.control!.disabled!"
+     [errors]="errorsAsArray"
+     [label]="label"
+     [name]="controlDir.name!"
+     [required]="required"
+     [touched]="controlDir.control!.touched!"
+     [valid]="controlDir.control!.valid!"
+     [helpText]="helpText"
+     app-input-wrapper>
+    <p-dropdown (onBlur)="onBlur()"
+                (onChange)="handleOptionSelected($any($event.value))"
+                [showClear]="true"
+                [(ngModel)]="value"
+                [disabled]="controlDir.control!.disabled!"
+                [id]="controlDir.name!.toString()"
+                [options]="options"
+                [placeholder]="placeholder"
+                [virtualScroll]="true"
+                [virtualScrollItemSize]="30"
+                optionLabel="label"
+                optionDisabled="inactive"
+                optionValue="value"
+                [style.max-height]="'100px'">
+    </p-dropdown>
+</div>

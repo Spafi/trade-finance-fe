@@ -1,0 +1,20 @@
+<div [disabled]="controlDir.control!.disabled! || disabled"
+     [errors]="errorsAsArray"
+     [label]="label"
+     [name]="controlDir.name!"
+     [required]="required"
+     [touched]="controlDir.control!.touched!"
+     [valid]="controlDir.control!.valid!"
+     [helpText]="helpText"
+     app-input-wrapper>
+    <p-inputNumber (onBlur)="onBlur()"
+                   (onInput)="onChange($any($event).value)"
+                   [(ngModel)]="value"
+                   [minFractionDigits]="2"
+                   [maxFractionDigits]="5"
+                   [min]="0"
+                   [disabled]="controlDir.control!.disabled! || disabled"
+                   [id]="controlDir.name!"
+                   [ngClass]="validClass || ''"
+                   [placeholder]="placeholder"></p-inputNumber>
+</div>

@@ -1,0 +1,11 @@
+<div>
+    <span class="p-float-label p-input-icon-right w-full">
+        <i *ngIf="touched" [ngClass]="[statusIcon, iconClass]"></i>
+        <ng-content></ng-content>
+        <label *ngIf="label" [for]="name">{{ label }}<strong *ngIf="required" class="text-primary">*</strong></label>
+    </span>
+    <small style="color: var(--text-color-secondary); font-size: 0.8rem"
+           class="font-italic font-light">{{ helpText }}</small>
+    <app-input-errors [errors]="errors"
+                      [displayErrors]="touched && !valid"></app-input-errors>
+</div>

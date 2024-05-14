@@ -1,0 +1,102 @@
+<ng-template #templateHeaders>
+
+    <!-- START: Table Headers Row -->
+    <tr>
+        @for (column of columns; track column.field) {
+
+            <!-- START: Sortable Column Header -->
+            @if (column.sortable || column.filterableAndSortable) {
+                <th [pSortableColumn]="column.field">
+                    {{ column.label }}
+                    <p-sortIcon [field]="column.field"></p-sortIcon>
+                </th>
+                <!-- END: Sortable Column Header -->
+
+                        <!-- START: Un-Sortable Column -->
+            } @else {
+                <th>
+                    {{ column.label }}
+                </th>
+            } <!-- END: Un-Sortable Column -->
+        }
+
+        <!-- START: Action Column Header -->
+        @if (hasActionsColumn) {
+            <th></th>
+        } <!-- END: Action Column Header -->
+    </tr>
+    <!-- END: Table Headers Row -->
+    <!-- START: Table Filters Row -->
+    <tr>
+        @for (column of columns; track column.field) {
+            <th>
+                <!-- START: Column Filter -->
+                @if (column.filterable || column.filterableAndSortable) {
+                    @switch (column.type) {
+
+                        <!-- START: Text Column Filter -->
+                        @case (ColumnType.Text) {
+                            <p-columnFilter [type]="column.type"
+                                            [field]="column.field"
+                                            display="menu"/>
+                        } <!-- END: Text Column Filter -->
+
+                                <!-- START: Date Column Filter -->
+                        @case (ColumnType.Date) {
+                            <p-columnFilter [type]="column.type"
+                                            [field]="column.field"
+                                            display="menu"/>
+                        } <!-- END: Date Column Filter -->
+
+                                <!-- START: Numeric Column Filter -->
+                        @case (ColumnType.Numeric) {
+                            <p-columnFilter [type]="column.type"
+                                            [field]="column.field"
+                                            display="menu"/>
+                        } <!-- END: Numeric Column Filter -->
+
+                                <!-- START: Boolean Column Filter -->
+                        @case (ColumnType.Boolean) {
+                            <p-columnFilter [type]="column.type"
+                                            [field]="column.field"
+                                            display="menu"/>
+                        } <!-- END: Boolean Column Filter -->
+
+                                <!-- START: Enum Column Filter -->
+                        @case (ColumnType.Enum) {
+                            <p-columnFilter [field]="column.field"
+                                            matchMode="equals"
+                                            display="menu">
+
+
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+
+                                    <!-- START: Enum Filter Dropdown -->
+                                    <p-dropdown [ngModel]="value"
+                                                [options]="column.enumFilterOptions ?? []"
+                                                (onChange)="filter($event.value)"
+                                                placeholder="Any">
+
+                                        <!-- START: Enum Dropdown Item -->
+                                        <ng-template let-option pTemplate="item">
+                                            <p-tag [value]="(( option.value | translateValue: column.enumTranslationKey ) | async) ?? option.label"
+                                                   [severity]="option.severity ?? SeverityEnum.info">
+                                            </p-tag>
+                                        </ng-template>
+                                        <!-- END: Enum Dropdown Item -->
+                                    </p-dropdown>
+                                    <!-- END: Enum Filter Dropdown -->
+                                </ng-template>
+                            </p-columnFilter>
+                        } <!-- END: Enum Column Filter -->
+                    }
+                }
+            </th>
+        }
+        <!-- START: Actions Column Header -->
+        @if (hasActionsColumn) {
+            <th></th>
+        } <!-- END: Actions Column Header -->
+    </tr>
+    <!-- END: Table Filters Row -->
+</ng-template>

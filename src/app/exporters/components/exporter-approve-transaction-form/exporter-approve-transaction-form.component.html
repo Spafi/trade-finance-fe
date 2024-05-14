@@ -1,0 +1,20 @@
+<form [formGroup]="form" class="grid mt-2">
+
+    <app-number-input formControlName="netPrice"
+                      class="col-12 p-fluid"
+                      label="Net price"/>
+
+    <app-date-input formControlName="tentativeDeliveryDate"
+                    class="col-12 p-fluid"
+                    label="Tentative delivery date"/>
+
+    <app-textarea-input formControlName="comments"
+                        class="col-12 p-fluid"
+                        helpText="Maximum 2000 characters"
+                        label="Comments"/>
+
+    <app-primary-button label="Submit"
+                        class="col-12 p-fluid"
+                        (onClick)="submit()"
+                        [disabled]="form.invalid"/>
+</form>

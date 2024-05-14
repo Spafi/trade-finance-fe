@@ -1,0 +1,59 @@
+<div class="shadow-4 my-4 p-2">
+    <p class="text-lg m-0 p-0 font-bold">Bank comments</p>
+    <p class="ml-4">{{ initialValues.bankComments }}</p>
+</div>
+
+<div class="shadow-4 my-4 p-2">
+    <p class="text-lg m-0 p-0 font-bold">Exporter comments</p>
+    <p class="ml-4">{{ initialValues.exporterComments ?? '-' }}</p>
+</div>
+
+<form [formGroup]="form" class="grid shadow-4 my-4 p-2">
+    <p class="mt-2 mb-3 text-lg font-bold">Update transaction</p>
+    <div class="col-12 grid m-0 p-0">
+        <div class="col-12 m-0 p-0 pl-2">
+            <p class="mt-2 mb-3 text-lg">Goods Specification</p>
+        </div>
+        <app-text-input formControlName="goodType"
+                        helpText="Requested good type"
+                        class="col-12 lg:col-4 p-fluid"
+                        label="Good Type"/>
+
+        <app-number-input formControlName="amount"
+                          helpText="Amount of goods requested"
+                          class="col-12 lg:col-4 p-fluid"
+                          label="Amount"/>
+
+        <app-text-input formControlName="unit"
+                        helpText="Measure unit of the requested amount"
+                        class="col-12 lg:col-4 p-fluid"
+                        label="Unit"/>
+    </div>
+
+    <div class="col-12 grid m-0 p-0">
+        <div class="col-12 m-0 p-0 pl-2">
+            <p class="mt-2 mb-3 text-lg">Contact Details</p>
+        </div>
+        <app-text-input formControlName="receivingAddress"
+                        class="col-12 lg:col-4 p-fluid"
+                        label="Receiving Address"/>
+
+        <app-text-input formControlName="email"
+                        class="col-12 lg:col-4 p-fluid"
+                        label="Email"/>
+
+        <app-text-input formControlName="phone"
+                        class="col-12 lg:col-4 p-fluid"
+                        label="Phone"/>
+    </div>
+
+    <app-textarea-input formControlName="importerComments"
+                        class="col-12 p-fluid"
+                        helpText="Maximum 2000 characters"
+                        label="Comments"/>
+
+    <app-primary-button label="Submit"
+                        class="col-12 lg:col-4 lg:col-offset-8 p-fluid"
+                        (onClick)="submit()"
+                        [disabled]="form.invalid"/>
+</form>

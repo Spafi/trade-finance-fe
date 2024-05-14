@@ -4,8 +4,9 @@ export const environment = {
     production   : false,
     apiURL,
     backendRoutes: {
-        importers: `${ apiURL }/importers`,
-        banks    : `${ apiURL }/banks`,
-        exporters: `${ apiURL }/exporters`
+        importers   : `${ apiURL }/importers`,
+        banks       : `${ apiURL }/banks`,
+        exporters   : `${ apiURL }/exporters`,
+        transactions: `${ apiURL }/transactions`
     }
 };

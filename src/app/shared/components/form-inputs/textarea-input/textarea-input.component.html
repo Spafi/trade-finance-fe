@@ -1,0 +1,22 @@
+<div [disabled]="controlDir.control!.disabled!"
+     [errors]="errorsAsArray"
+     [label]="label"
+     [name]="controlDir.name!"
+     [required]="required"
+     [touched]="controlDir.control!.touched!"
+     [valid]="controlDir.control!.valid!"
+     [helpText]="helpText"
+     app-input-wrapper
+     class="p-field">
+    <textarea pInputTextarea
+              (blur)="onBlur()"
+              (input)="onChange($any($event.target).value)"
+              [(ngModel)]="value"
+              [disabled]="controlDir.control!.disabled!"
+              [id]="controlDir.name!"
+              [ngClass]="validClass || ''"
+              [placeholder]="placeholder"
+              [rows]="5"
+              [autoResize]="true"
+              style="width: 100%"></textarea>
+</div>

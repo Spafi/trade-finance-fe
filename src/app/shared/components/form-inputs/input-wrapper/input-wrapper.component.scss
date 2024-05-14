@@ -1,0 +1,5 @@
+
+:host ::ng-deep .p-float-label .p-inputwrapper-filled ~ label,
+:host ::ng-deep .p-float-label input.p-filled ~ label {
+  top: -.40rem;
+}

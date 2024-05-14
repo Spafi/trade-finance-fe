@@ -1,0 +1,17 @@
+<form [formGroup]="form" class="grid mt-2">
+    <app-select-input formControlName="accountId"
+                      class="col-12 p-fluid"
+                      [options]="accounts"
+                      helpText="You can change the selected account"
+                      label="Account"/>
+
+    <app-textarea-input formControlName="comments"
+                        class="col-12 p-fluid"
+                        helpText="Maximum 2000 characters"
+                        label="Comments"/>
+
+    <app-primary-button label="Submit"
+                        class="col-12 p-fluid"
+                        (onClick)="submit()"
+                        [disabled]="form.invalid"/>
+</form>

@@ -1,1 +1,63 @@
-<p>importer-page works!</p>
+<div class="max-w-30rem mx-auto my-4">
+    <p-dropdown
+            [options]="importerSelectOptions"
+            [(ngModel)]="selectedImporter"
+            optionLabel="label"
+            (onChange)="getSelectedImporterData($event.value.value)"
+            class="p-fluid"
+            placeholder="Select an Importer"/>
+</div>
+
+<div class="flex flex-column align-items-center justify-content-center mt-4 gap-4 px-4">
+
+    <div *ngIf="selectedImporter" class="max-w-screen">
+        <div class="mt-4">
+            <app-create-transaction-form [importerId]="selectedImporter.value"
+                                         (onSubmitSuccess)="getSelectedImporterData(selectedImporter.value)"></app-create-transaction-form>
+        </div>
+        <div class="grid mb-8">
+            <div class="col-12 md:col-6">
+                <app-table title="Active transactions"
+                           [items]="activeTransactions"
+                           [columns]="activeTableColumns"
+                           [hasActionsColumn]="true"
+                           (onViewClick)="setSelectedTransaction($event)">
+                </app-table>
+            </div>
+            <div class="col-12 md:col-6">
+                <div class="surface-card h-full p-4">
+                    <ng-container *ngIf="selectedTransaction; else noTransaction">
+                        <div class="flex flex-column align-items-center justify-content-between h-full mb-4">
+                            <div class="flex flex-column w-full">
+                                <div class="flex align-items-center justify-content-between">
+                                    <p class="text-lg font-bold">Transaction Details</p>
+                                    <p-tag [value]="(( selectedTransaction.status | translateValue: 'ENUM_LABELS.TransactionStatus' ) | async) ?? ''"
+                                           [severity]="getTransactionStatusTagSeverity( selectedTransaction.status)">
+                                    </p-tag>
+                                </div>
+                                <app-update-transaction-form [initialValues]="selectedTransaction"
+                                                             (onSubmitSuccess)="getSelectedImporterData(selectedTransaction.importer.id)"></app-update-transaction-form>
+
+                            </div>
+
+                        </div>
+
+
+                    </ng-container>
+                </div>
+                <ng-template #noTransaction>
+                    <div class="w-full h-full flex align-items-center justify-content-center">
+                        <p class="text-lg font-italic text-gray-400">Select a transaction to view its details</p>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div>
+            <app-table title="Transaction history"
+                       [items]="historyTransactionData"
+                       [columns]="historyTableColumns"
+                       [hasActionsColumn]="false">
+            </app-table>
+        </div>
+    </div>
+</div>

@@ -1,27 +1,31 @@
-# TradeMediatorClient
+# Trade Mediator Client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
+![Angular 17](https://img.shields.io/badge/Angular-d6002f?style=for-the-badge&labelColor=black&logo=angular&logoColor=d6002f)
 
-## Development server
+An Angular client for a simple platform that supports importers and exporters to communicate with each other, using a
+bank as
+intermediary.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Relevant Links
 
-## Code scaffolding
+[Data Model](https://app.diagrams.net/#G19Jiycc_v9KolPfTiTQ08G6SXK9qh4hBU#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+[API GitHub Repository]()
 
-## Build
+[Angular Client GitHub Repository]()
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Getting started
 
-## Running unit tests
+### Prerequisites
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+[Node](https://nodejs.org/en/download)
 
-## Running end-to-end tests
+[Yarn](https://yarnpkg.com/)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Running the application locally
 
-## Further help
+1. `yarn install`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+2. `yarn run start`
+
+`If you changed the default 8080 port of the API, you need to update environments/environment.ts file`

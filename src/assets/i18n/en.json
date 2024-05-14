@@ -1,0 +1,27 @@
+{
+    "E": {
+        "BAD_REQUEST": {
+            "TITLE": "Invalid data",
+            "BODY": "Please try again"
+        },
+        "BASE_ERROR": {
+            "TITLE": "Something went wrong",
+            "BODY": "Your request cannot be processed for the moment"
+        }
+    },
+    "FORM_INPUT_ERRORS": {
+        "required": "This field is required",
+        "maxlength": "Value is too long",
+        "Email": "Email is invalid",
+        "Min": "Value is too low"
+    },
+    "ENUM_LABELS": {
+        "TransactionStatus": {
+            "REQUESTED": "Requested",
+            "REJECTED_BY_BANK": "Rejected by Bank",
+            "APPROVED_BY_BANK": "Approved by Bank",
+            "REJECTED_BY_EXPORTER": "Rejected by Exporter",
+            "APPROVED_BY_EXPORTER": "Approved by Exporter"
+        }
+    }
+}

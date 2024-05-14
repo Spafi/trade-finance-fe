@@ -1,0 +1,135 @@
+<p-table #table
+         dataKey="id"
+         [value]="items"
+         [paginator]="true"
+         [rowHover]="true"
+         [scrollable]="true"
+         [responsiveLayout]="'scroll'"
+         [showCurrentPageReport]="true"
+         [rowsPerPageOptions]="rowsPerPageOptions"
+         [rows]="itemsPerPage"
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+
+    <!-- START: Caption -->
+    <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+
+            <!-- START: Table title -->
+            <div>
+                <p class="text-xl my-0 py-0">{{ title }}</p>
+            </div>
+            <!-- END: Table title -->
+
+            <!-- START: Clear Filters Button -->
+            <button pButton
+                    pRipple
+                    label="Clear"
+                    class="p-button-outlined p-button-danger"
+                    icon="pi pi-filter-slash"
+                    (click)=table.clear()></button>
+            <!-- END: Clear Filters Button -->
+        </div>
+    </ng-template>
+    <!-- END: Caption -->
+
+    <!-- START: Header -->
+    <ng-template pTemplate="header">
+        <app-table-header [columns]="columns" [hasActionsColumn]="hasActionsColumn"/>
+    </ng-template>
+    <!-- END: Header -->
+
+    <!-- START: Body -->
+    <ng-template pTemplate="body" let-rowData>
+
+        <!-- START: Row -->
+        <tr>
+            @for (column of columns; track column.field) {
+
+                @if (!column.hidden) {
+                    @switch (column.type) {
+
+                        <!-- START: Enum Column -->
+                        @case (ColumnType.Enum) {
+                            <td>
+                                <p-tag [value]="(( rowData[column.field] | translateValue: column.enumTranslationKey ) | async) ?? ''"
+                                       [severity]="getSeverity(rowData[column.field], column)">
+                                </p-tag>
+                            </td>
+                        } <!-- END: Enum Column -->
+
+                                <!-- START: Date Column -->
+                        @case (ColumnType.Date) {
+                            <td> {{ rowData[column.field] | dateValue }}</td>
+                        } <!-- END: Date Column -->
+
+                                <!-- START: Boolean Column -->
+                        @case (ColumnType.Boolean) {
+                            <td>
+                                <p-chip>
+                                    <span [ngClass]="{
+                                        'p-1': true,
+                                        'text-green-500': rowData[column.field],
+                                        'text-red-500': !rowData[column.field]
+                                    }">
+                                        {{ ( rowData[column.field] | translateValue: 'BOOLEAN_LABEL' ) | async }}
+                                    </span>
+                                </p-chip>
+                            </td>
+                        } <!-- END: Boolean Column -->
+
+                                <!-- START: Default Generic Column (Treated as Text) -->
+                        @default {
+                            @switch (column.hideTextOverflow) {
+
+                                <!-- START: Hidden Text Overflow Column -->
+                                @case (true) {
+                                    <td [pTooltip]="rowData[column.field]"
+                                        [autoHide]="false"
+                                        class="overflow-hidden max-w-7rem text-overflow-ellipsis white-space-nowrap">
+                                        {{ rowData[column.field] }}
+                                    </td>
+                                } <!-- END: Hidden Text Overflow Column -->
+
+                                        <!-- Expression should not be simplified -->
+                                @case (false || undefined) {
+                                    <!-- START: Default Text Column -->
+                                    <td>
+                                        {{ rowData[column.field] }}
+                                    </td>
+                                    <!-- END: Default Text Column -->
+                                }
+                            }
+                        } <!-- END: Default Generic Column -->
+                    }
+                }
+            }
+
+            <!-- START: Action Buttons Column -->
+            @if (hasActionsColumn) {
+                <td>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <!-- START: View Button -->
+                        <button pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-eye"
+                                (click)="onViewButtonClick(rowData)"
+                                class="p-button-rounded"></button>
+                        <!-- END: View Button -->
+                    </div>
+                </td>
+            }
+            <!-- END: Action Buttons Column -->
+        </tr>
+        <!-- END: Row -->
+    </ng-template>
+    <!-- END: Body -->
+
+    <!-- START: Empty Message Template -->
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td [colSpan]="colSpan"><em>No Items</em></td>
+        </tr>
+    </ng-template>
+    <!-- END: Empty Message Template -->
+</p-table>

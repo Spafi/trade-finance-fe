@@ -1,1 +1,119 @@
-<p>exporter-page works!</p>
+<div class="max-w-30rem mx-auto my-4">
+    <p-dropdown [options]="exporterSelectOptions"
+                [(ngModel)]="selectedExporter"
+                optionLabel="label"
+                (onChange)="getSelectedExporterData($event.value.value)"
+                class="p-fluid"
+                placeholder="Select an Exporter"/>
+</div>
+
+<div class="flex flex-column align-items-center justify-content-center mt-4 gap-4 px-4">
+
+    <div *ngIf="selectedExporter" class="max-w-screen">
+        <div class="grid mb-8">
+            <div class="col-12 md:col-6">
+                <app-table title="Active transactions"
+                           [items]="activeTransactions"
+                           [columns]="activeTableColumns"
+                           [hasActionsColumn]="true"
+                           (onViewClick)="setSelectedTransaction($event)">
+                </app-table>
+            </div>
+            <div class="col-12 md:col-6">
+                <div class="surface-card h-full p-4">
+                    <ng-container *ngIf="selectedTransaction; else noTransaction">
+                        <div class="flex flex-column align-items-center justify-content-between h-full mb-4">
+                            <div class="flex flex-column w-full">
+                                <div class="flex align-items-center justify-content-between">
+                                    <p class="text-lg font-bold">Transaction Details</p>
+                                    <p-tag [value]="(( selectedTransaction.status | translateValue: 'ENUM_LABELS.TransactionStatus' ) | async) ?? ''"
+                                           [severity]="getTransactionStatusTagSeverity( selectedTransaction.status)">
+                                    </p-tag>
+                                </div>
+                                <div class="p-2 shadow-4">
+                                    <p>Id: {{ selectedTransaction.id }}</p>
+                                    <p>Created at: {{ selectedTransaction.createdAt | date }}</p>
+                                </div>
+
+                                <div class="p-2 shadow-4">
+                                    <p class="font-bold">Goods Specification</p>
+                                    <p>Good type: {{ selectedTransaction.goodType }}</p>
+                                    <p>Amount: {{ selectedTransaction.amount }} {{ selectedTransaction.unit }}</p>
+                                </div>
+
+                                <div class="p-2 shadow-4">
+                                    <p class="font-bold">Importer Details</p>
+                                    <p>Importer name: {{ selectedTransaction.importer.name }}</p>
+                                    <p>Email: {{ selectedTransaction.email }}</p>
+                                    <p>Phone: {{ selectedTransaction.phone }}</p>
+                                    <p>Receiving address: {{ selectedTransaction.receivingAddress }}</p>
+                                    <p>Comments: {{ selectedTransaction.importerComments }}</p>
+                                </div>
+
+                                <div class="p-2 shadow-4">
+                                    <p class="font-bold">Exporter Details</p>
+                                    <p>Exporter name: {{ selectedTransaction.exporter.name }}</p>
+                                    <p>Tentative delivery date: {{ selectedTransaction.tentativeDeliveryDate }}</p>
+                                    <p>Net price: {{ selectedTransaction.netPrice }}</p>
+                                    <p>VAT: {{ selectedTransaction.vat }}</p>
+                                    <p>Comments: {{ selectedTransaction.exporterComments }}</p>
+                                </div>
+
+                                <div class="p-2 shadow-4">
+                                    <p class="font-bold">Bank Details</p>
+                                    <p>Bank name: {{ selectedTransaction.bank.name }}</p>
+                                    <p>Comments: {{ selectedTransaction.bankComments }}</p>
+                                </div>
+
+                            </div>
+                            <div class="flex w-full align-items-center justify-content-between">
+                                <app-reject-button label="Reject"
+                                                   icon="pi pi-times"
+                                                   (onClick)="showRejectModal()"></app-reject-button>
+                                <app-success-button label="Approve"
+                                                    icon="pi pi-check"
+                                                    (onClick)="showApproveModal()"></app-success-button>
+                            </div>
+                        </div>
+
+                        <p-dialog [(visible)]="isApproveDialogVisible"
+                                  (onHide)="hideApproveDialog()"
+                                  [style]="{ width: '750px' }"
+                                  header="Approve Transaction"
+                                  [modal]="true"
+                                  styleClass="p-fluid">
+                            <ng-template pTemplate="content">
+                                <app-exporter-approve-transaction-form [transaction]="selectedTransaction"
+                                                                       (onSubmitSuccess)="onApproveSuccess()"></app-exporter-approve-transaction-form>
+                            </ng-template>
+                        </p-dialog>
+
+                        <p-dialog [(visible)]="isRejectDialogVisible"
+                                  (onHide)="hideRejectDialog()"
+                                  [style]="{ width: '750px' }"
+                                  header="Reject Transaction"
+                                  [modal]="true">
+                            <ng-template pTemplate="content">
+                                <app-exporter-reject-transaction-form [transaction]="selectedTransaction"
+                                                                      (onSubmitSuccess)="onRejectSuccess()"></app-exporter-reject-transaction-form>
+                            </ng-template>
+                        </p-dialog>
+
+                    </ng-container>
+                </div>
+                <ng-template #noTransaction>
+                    <div class="w-full h-full flex align-items-center justify-content-center">
+                        <p class="text-lg font-italic text-gray-400">Select a transaction to view its details</p>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div>
+            <app-table title="Transaction history"
+                       [items]="historyTransactionData"
+                       [columns]="historyTableColumns"
+                       [hasActionsColumn]="false">
+            </app-table>
+        </div>
+    </div>
+</div>
