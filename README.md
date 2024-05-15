@@ -10,9 +10,9 @@ intermediary.
 
 [Data Model](https://app.diagrams.net/#G19Jiycc_v9KolPfTiTQ08G6SXK9qh4hBU#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D)
 
-[API GitHub Repository]()
+[API GitHub Repository](https://github.com/Spafi/trade-finance-be)
 
-[Angular Client GitHub Repository]()
+[Angular Client GitHub Repository](https://github.com/Spafi/trade-finance-fe)
 
 ## Getting started
 
